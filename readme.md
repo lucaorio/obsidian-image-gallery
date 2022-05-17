@@ -1,3 +1,8 @@
+The plugin is currently [pending review](https://github.com/obsidianmd/obsidian-releases/pull/961).
+Until then, feel free to install it manually by cloning/downloading this repository, and moving its folder into your `MyVault/.obsidian/plugins` folder. Please, keep in mind that proceeding this way is not best practice, and I'm not sure if the plugin will receive updates later on.
+
+---
+
 ![Obsidian Image Gallery](assets/obsidian-image-gallery-header.jpg)
 
 # Obsidian Image Gallery
@@ -45,6 +50,8 @@ type=vertical
 Take a look at [settings](#settings) to see how to tweak some properties of the gallery; the examples available above are the most minimal configuration possible.
 
 In *[Live Preview](https://help.obsidian.md/Live+preview+update)* mode, the gallery will be generated after moving the cursor outside the code block. Using the regular *Source Mode*, press `cmd+e` (or `ctrl+e`) to trigger Obsidian's Note Preview.
+
+![Obsidian Image Gallery - Animation](assets/obsidian-image-gallery.gif)
 
 ## Settings
 
