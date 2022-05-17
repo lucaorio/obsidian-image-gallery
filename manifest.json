@@ -1,0 +1,10 @@
+{
+  "id": "obsidian-image-gallery",
+  "name": "Image Gallery",
+  "version": "1.0.0",
+  "minAppVersion": "0.14.6",
+  "description": "A zero setup masonry image gallery for Obsidian",
+  "author": "Luca Orio",
+  "authorUrl": "https://github.com/lucaorio/obsidian-image-gallery",
+  "isDesktopOnly": false
+}
