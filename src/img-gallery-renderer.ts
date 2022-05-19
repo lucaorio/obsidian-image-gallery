@@ -1,10 +1,10 @@
-import { App, MarkdownRenderChild, TFolder, Platform, normalizePath } from 'obsidian'
+import { App, MarkdownRenderChild, TFolder, TFile, Platform, normalizePath } from 'obsidian'
 import ImgGallery from './main'
 
 export class imgGalleryRenderer extends MarkdownRenderChild {
   private _gallery: HTMLElement = null
   private _settings: {[key: string]: any} = {}
-  private _imgList: string[] = null
+  private _imagesList: string[] = null
 
   constructor(
     public plugin: ImgGallery,
@@ -18,7 +18,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
 
   async onload() {
     this._getSettings()
-    this._getImgList()
+    this._getImagesList()
 
     if (this._settings.type === 'horizontal') this._injectHorMasonry()
     else this._injectVerMasonry()
@@ -59,26 +59,32 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     this._settings.height = settingsObj.height || '260'
   }
 
-  private _getImgList() {
-    // retrieve a list of the images
+  private _getImagesList() {
+    // retrieve a list of the files
     const folder = this.app.vault.getAbstractFileByPath(this._settings.path)
 
     let files
     if (folder instanceof TFolder) { files = folder.children }
     else console.error('The folder doesn\'t exist, or it\'s empty!')
 
+    // filter the list of files to make sure we're dealing with images only
+    const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", ".tiff", ".tif"]
+    const images = files.filter(file => {
+      if (file instanceof TFile && validExtensions.includes(file.extension)) return file
+    })
+
     // sort the list by name, mtime, or ctime
-    const orderedFiles = files.sort((a: any, b: any) => {
+    const orderedImages = images.sort((a: any, b: any) => {
       const refA = this._settings.sortby ? a.stat[this._settings.sortby] : a['name'].toUpperCase()
       const refB = this._settings.sortby ? b.stat[this._settings.sortby] : b['name'].toUpperCase()
       return (refA < refB) ? -1 : (refA > refB) ? 1 : 0
     })
 
     // re-sort again by ascending or descending order
-    const sortedFiles = this._settings.sort === 'asc' ? orderedFiles : orderedFiles.reverse()
+    const sortedImages = this._settings.sort === 'asc' ? orderedImages : orderedImages.reverse()
 
     // return an array of strings only
-    this._imgList = sortedFiles.map(file =>
+    this._imagesList = sortedImages.map(file =>
       this.app.vault.adapter.getResourcePath(file.path)
     )
   }
@@ -93,7 +99,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     this._gallery = gallery
 
     // inject and style images
-    this._imgList.forEach((uri) => {
+    this._imagesList.forEach((uri) => {
       const img = this._gallery.createEl('img')
       img.addClass('grid-item')
       img.style.marginBottom = `${this._settings.gutter}px`
@@ -114,7 +120,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     this._gallery = gallery
 
     // inject and style images
-    this._imgList.forEach((uri) => {
+    this._imagesList.forEach((uri) => {
       const figure = this._gallery.createEl('figure')
       figure.addClass('grid-item')
       figure.style.margin = `0px ${this._settings.gutter}px ${this._settings.gutter}px 0px`
