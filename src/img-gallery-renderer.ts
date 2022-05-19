@@ -40,9 +40,15 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
         settingsObj[setting[0]] = setting[1]
       })
 
+    // check for required settings
+    if (!settingsObj.path) {
+      const error = 'Please specify a path!'
+      this._renderError(error)
+      throw new Error(error);
+    }
+
     // store settings, normalize and set sensible defaults
     this._settings.path = normalizePath(settingsObj.path)
-    if (!settingsObj.path) console.error('Please specify a path');
 
     this._settings.type = settingsObj.type || 'horizontal'
     this._settings.radius = settingsObj.radius || '0'
@@ -65,7 +71,11 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
 
     let files
     if (folder instanceof TFolder) { files = folder.children }
-    else console.error('The folder doesn\'t exist, or it\'s empty!')
+    else {
+      const error = 'The folder doesn\'t exist, or it\'s empty!'
+      this._renderError(error)
+      throw new Error(error);
+    }
 
     // filter the list of files to make sure we're dealing with images only
     const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", ".tiff", ".tif"]
@@ -136,5 +146,19 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
       img.style.borderRadius = '0px'
       img.src = uri
     })
+  }
+
+  private _renderError(error: string) {
+    // inject the error wrapper
+    const wrapper = this.container.createEl('div')
+    wrapper.style.borderRadius = '4px'
+    wrapper.style.padding = '2px 16px'
+    wrapper.style.backgroundColor = '#e50914'
+    wrapper.style.color = '#fff'
+
+    const content = wrapper.createEl('p')
+    content.style.fontWeight = 'bolder'
+    const prefix = '(Error) Image Gallery: '
+    content.innerHTML = `${prefix}${error}`
   }
 }
