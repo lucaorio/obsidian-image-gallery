@@ -1,4 +1,4 @@
-import { App, MarkdownRenderChild, TFolder, Platform } from 'obsidian'
+import { App, MarkdownRenderChild, TFolder, Platform, normalizePath } from 'obsidian'
 import ImgGallery from './main'
 
 export class imgGalleryRenderer extends MarkdownRenderChild {
@@ -40,8 +40,8 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
         settingsObj[setting[0]] = setting[1]
       })
 
-    // store settings and set sensible defaults
-    this._settings.path = settingsObj.path
+    // store settings, normalize and set sensible defaults
+    this._settings.path = normalizePath(settingsObj.path)
     if (!settingsObj.path) console.error('Please specify a path');
 
     this._settings.type = settingsObj.type || 'horizontal'
