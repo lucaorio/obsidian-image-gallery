@@ -1,4 +1,5 @@
 import { App, MarkdownRenderChild, TFolder, TFile, Platform, normalizePath } from 'obsidian'
+import * as jsyaml from 'js-yaml'
 import ImgGallery from './main'
 
 export class imgGalleryRenderer extends MarkdownRenderChild {
@@ -25,26 +26,27 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
   }
 
   async onunload() {
-    this._gallery.remove()
-    this._gallery = null
+    if (this._gallery) {
+      this._gallery.remove()
+      this._gallery = null
+    }
   }
 
   private _getSettings() {
     // parse the settings from the code block
-    const settingsObj: {[key: string]: string} = {}
-
-    this.src.split('\n')
-      .filter((row) => row.length > 0)
-      .forEach((item) => {
-        const setting = item.split('=')
-        settingsObj[setting[0]] = setting[1]
-      })
+    const settingsObj: any = jsyaml.load(this.src)
 
     // check for required settings
+    if (settingsObj === undefined) {
+      const error = 'Cannot parse YAML!'
+      this._renderError(error)
+      throw new Error(error)
+    }
+
     if (!settingsObj.path) {
       const error = 'Please specify a path!'
       this._renderError(error)
-      throw new Error(error);
+      throw new Error(error)
     }
 
     // store settings, normalize and set sensible defaults
@@ -74,7 +76,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     else {
       const error = 'The folder doesn\'t exist, or it\'s empty!'
       this._renderError(error)
-      throw new Error(error);
+      throw new Error(error)
     }
 
     // filter the list of files to make sure we're dealing with images only
