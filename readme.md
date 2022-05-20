@@ -34,16 +34,16 @@ To create a dynamic gallery, add one of the following code blocks to a note (mak
 For a horizontal masonry:
 ````
 ```img-gallery
-path=Attachments/Folder
-type=horizontal
+path: Attachments/Folder
+type: horizontal
 ```
 ````
 
 For a vertical masonry:
 ````
 ```img-gallery
-path=Attachments/Folder
-type=vertical
+path: Attachments/Folder
+type: vertical
 ```
 ````
 
@@ -55,20 +55,23 @@ In *[Live Preview](https://help.obsidian.md/Live+preview+update)* mode, the gall
 
 ## Settings
 
-Settings can be customized in any order, and optional properties default to the values outlined in the list of bullet points below:
-- `path=Attachments/Folder` (**Required**, path relative to the root of your vault)
-- `type=horizontal` (**Optional**, type of masonry `horizontal` or `vertical`)
-- `gutter=8` (**Optional**, spacing between the images)
-- `radius=0` (**Optional**, border radius of the images)
-- `sortby=ctime` (**Optional**, sort by `ctime`, `mtime`, or `name`)
-- `sort=desc` (**Optional**, order of sorting: `desc` or `asc`)
+Settings can be customized in any order, in `yaml` syntax. Optional properties default to the values outlined in the list of bullet points below:
 
-Applicable to `type=horizontal` only:
-- `height=260` (**Optional**, height in px of all rows)
+- `path: Attachments/Folder` (**required**, path relative to the root of your vault)
+- `type: horizontal` (**optional**, type of masonry `horizontal` or `vertical`)
+- `gutter: 8` (**optional**, spacing between the images)
+- `radius: 0` (**optional**, border radius of the images)
+- `sortby: ctime` (**optional**, sort by `ctime`, `mtime`, or `name`)
+- `sort: desc` (**optional**, order of sorting: `desc` or `asc`)
+
+Applicable to `type: horizontal` only:
+
+- `height: 260` (**optional**, height in px of all rows)
 
 Applicable to `type=vertical` only:
-- `columns=3` (**Optional**, number of columns for desktop)
-- `mobile=1` (**Optional**, number of columns for mobile)
+
+- `columns: 3` (**optional**, number of columns for desktop)
+- `mobile: 1` (**optional**, number of columns for mobile)
 
 ## Notes:
 - For `path` there is no need to specify the name of the vault
