@@ -1,5 +1,9 @@
-The plugin is currently [pending review](https://github.com/obsidianmd/obsidian-releases/pull/961).
-Until then, feel free to install it manually by cloning/downloading this repository, and moving its folder into your `MyVault/.obsidian/plugins` folder. Please, keep in mind that proceeding this way is not best practice, and I'm not sure if the plugin will receive updates later on.
+Obsidian Image Gallery is currently [pending review](https://github.com/obsidianmd/obsidian-releases/pull/961).
+Until then, feel free to install it manually by cloning/downloading this repository, moving its folder into your `MyVault/.obsidian/plugins` folder, and building it with `npm`.
+
+If you're unsure how to build it, you can grab the `main.js` file [from here](https://github.com/lucaorio/obsidian-image-gallery/releases/tag/1.0.0) and copy/paste it inside the folder you previously moved into your plugin folder.
+
+**Please, keep in mind that proceeding this way is not best practice, and I'm not sure the plugin will receive updates later on!**
 
 ---
 
