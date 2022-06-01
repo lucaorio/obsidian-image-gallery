@@ -4,7 +4,7 @@ import ImgGallery from './main'
 export class imgGalleryRenderer extends MarkdownRenderChild {
   private _gallery: HTMLElement = null
   private _settings: {[key: string]: any} = {}
-  private _imagesList: string[] = null
+  private _imagesList: string[] = []
 
   constructor(
     public plugin: ImgGallery,
