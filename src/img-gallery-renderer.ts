@@ -1,11 +1,10 @@
-import { App, MarkdownRenderChild, TFolder, TFile, Platform, normalizePath } from 'obsidian'
-import * as jsyaml from 'js-yaml'
+import { App, MarkdownRenderChild, TFolder, TFile, Platform, normalizePath, parseYaml } from 'obsidian'
 import ImgGallery from './main'
 
 export class imgGalleryRenderer extends MarkdownRenderChild {
   private _gallery: HTMLElement = null
   private _settings: {[key: string]: any} = {}
-  private _imagesList: string[] = null
+  private _imagesList: string[] = []
 
   constructor(
     public plugin: ImgGallery,
@@ -34,7 +33,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
 
   private _getSettings() {
     // parse the settings from the code block
-    const settingsObj: any = jsyaml.load(this.src)
+    const settingsObj: any = parseYaml(this.src)
 
     // check for required settings
     if (settingsObj === undefined) {
@@ -52,19 +51,19 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     // store settings, normalize and set sensible defaults
     this._settings.path = normalizePath(settingsObj.path)
 
-    this._settings.type = settingsObj.type || 'horizontal'
-    this._settings.radius = settingsObj.radius || '0'
-    this._settings.gutter = settingsObj.gutter || '8'
-    this._settings.sortby = settingsObj.sortby || 'ctime'
-    this._settings.sort = settingsObj.sort || 'desc'
+    this._settings.type = settingsObj.type ?? 'horizontal'
+    this._settings.radius = settingsObj.radius ?? 0
+    this._settings.gutter = settingsObj.gutter ?? 8
+    this._settings.sortby = settingsObj.sortby ?? 'ctime'
+    this._settings.sort = settingsObj.sort ?? 'desc'
 
     // settings for vertical mansory only
-    this._settings.mobile = settingsObj.mobile || '1'
-    if (Platform.isDesktop) this._settings.columns = settingsObj.columns || '3'
+    this._settings.mobile = settingsObj.mobile ?? 1
+    if (Platform.isDesktop) this._settings.columns = settingsObj.columns ?? 3
     else this._settings.columns = this._settings.mobile
 
     // settings for horizontal mansory only
-    this._settings.height = settingsObj.height || '260'
+    this._settings.height = settingsObj.height ?? 260
   }
 
   private _getImagesList() {
