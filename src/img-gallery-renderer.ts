@@ -1,5 +1,4 @@
-import { App, MarkdownRenderChild, TFolder, TFile, Platform, normalizePath } from 'obsidian'
-import * as jsyaml from 'js-yaml'
+import { App, MarkdownRenderChild, TFolder, TFile, Platform, normalizePath, parseYaml } from 'obsidian'
 import ImgGallery from './main'
 
 export class imgGalleryRenderer extends MarkdownRenderChild {
@@ -34,7 +33,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
 
   private _getSettings() {
     // parse the settings from the code block
-    const settingsObj: any = jsyaml.load(this.src)
+    const settingsObj: any = parseYaml(this.src)
 
     // check for required settings
     if (settingsObj === undefined) {
