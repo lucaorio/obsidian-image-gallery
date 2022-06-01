@@ -51,19 +51,19 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     // store settings, normalize and set sensible defaults
     this._settings.path = normalizePath(settingsObj.path)
 
-    this._settings.type = settingsObj.type || 'horizontal'
-    this._settings.radius = settingsObj.radius || '0'
-    this._settings.gutter = settingsObj.gutter || '8'
-    this._settings.sortby = settingsObj.sortby || 'ctime'
-    this._settings.sort = settingsObj.sort || 'desc'
+    this._settings.type = settingsObj.type ?? 'horizontal'
+    this._settings.radius = settingsObj.radius ?? 0
+    this._settings.gutter = settingsObj.gutter ?? 8
+    this._settings.sortby = settingsObj.sortby ?? 'ctime'
+    this._settings.sort = settingsObj.sort ?? 'desc'
 
     // settings for vertical mansory only
-    this._settings.mobile = settingsObj.mobile || '1'
-    if (Platform.isDesktop) this._settings.columns = settingsObj.columns || '3'
+    this._settings.mobile = settingsObj.mobile ?? 1
+    if (Platform.isDesktop) this._settings.columns = settingsObj.columns ?? 3
     else this._settings.columns = this._settings.mobile
 
     // settings for horizontal mansory only
-    this._settings.height = settingsObj.height || '260'
+    this._settings.height = settingsObj.height ?? 260
   }
 
   private _getImagesList() {
