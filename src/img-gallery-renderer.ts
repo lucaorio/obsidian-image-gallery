@@ -79,7 +79,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     }
 
     // filter the list of files to make sure we're dealing with images only
-    const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", ".tiff", ".tif"]
+    const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", "tiff", "tif"]
     const images = files.filter(file => {
       if (file instanceof TFile && validExtensions.includes(file.extension)) return file
     })
