@@ -79,7 +79,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     }
 
     // filter the list of files to make sure we're dealing with images only
-    const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", ".tiff", ".tif"]
+    const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", "tiff", "tif"]
     const images = files.filter(file => {
       if (file instanceof TFile && validExtensions.includes(file.extension)) return file
     })
@@ -150,16 +150,14 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
   }
 
   private _renderError(error: string) {
-    // inject the error wrapper
+    // render a custom error and style it
     const wrapper = this.container.createEl('div')
+    const content = wrapper.createEl('p', {text: `(Error) Image Gallery: ${error}`});
+
     wrapper.style.borderRadius = '4px'
     wrapper.style.padding = '2px 16px'
     wrapper.style.backgroundColor = '#e50914'
     wrapper.style.color = '#fff'
-
-    const content = wrapper.createEl('p')
-    content.style.fontWeight = 'bolder'
-    const prefix = '(Error) Image Gallery: '
-    content.innerHTML = `${prefix}${error}`
+    wrapper.style.fontWeight = 'bolder'
   }
 }
