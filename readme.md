@@ -67,6 +67,7 @@ Settings can be customized in any order, in `yaml` syntax. Optional properties d
 - `radius: 0` (**optional**, border radius of the images)
 - `sortby: ctime` (**optional**, sort by `ctime`, `mtime`, or `name`)
 - `sort: desc` (**optional**, order of sorting: `desc` or `asc`)
+- `preview: false` (**optional**, whether to display image previews on click)
 
 Applicable to `type: horizontal` only:
 

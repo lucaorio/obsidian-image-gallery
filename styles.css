@@ -1,0 +1,126 @@
+:root {
+  --oig-icon-size: 18px;
+}
+
+.block-language-img-gallery .grid-item img {
+  border-radius: var(--oig-radius);
+}
+
+.block-language-img-gallery .grid-wrapper.vertical {
+  line-height: 0px;
+  overflow: visible;
+  column-count: var(--oig-columns);
+  column-gap: var(--oig-gutter);
+}
+
+.block-language-img-gallery .grid-wrapper.vertical .grid-item {
+  margin: 0 0 var(--oig-gutter);
+  position: relative;
+}
+
+.block-language-img-gallery .grid-wrapper.vertical .grid-item img {
+  width: 100%;
+  height: auto;
+}
+
+.block-language-img-gallery .grid-wrapper.horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: var(--oig-gutter);
+}
+
+.block-language-img-gallery .grid-wrapper.horizontal .grid-item {
+  flex: 1 0 auto;
+  overflow: hidden;
+  margin: 0px var(--oig-gutter) var(--oig-gutter) 0px;
+  height: var(--oig-height);
+}
+
+.block-language-img-gallery .grid-wrapper.horizontal .grid-item img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 0px;
+}
+
+.block-language-img-gallery .error {
+  border-radius: 4px;
+  padding: 2px 16px;
+  background-color: #e50914;
+  color: #fff;
+  font-weight: bolder;
+}
+
+#oig-lightbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: visible;
+  opacity: 1;
+  background: var(--background-modifier-cover);
+  transition: all .5s ease-in-out;
+}
+
+#oig-lightbox[hidden] {
+  display: flex;
+  visibility: hidden;
+  opacity: 0;
+  background: transparent;
+}
+
+#oig-lightbox .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  max-height: 90%;
+  padding: 0 20px;
+  transform: scale(1, 1);
+  transition: transform .5s ease-in-out;
+}
+
+#oig-lightbox[hidden] .wrapper {
+  transform: scale(0.5, 0.5);
+}
+
+#oig-lightbox .controls {
+  display: flex;
+  align-self: stretch;
+  max-width: 100%;
+  padding: 10px 0 7px;
+  gap: 7px;
+}
+
+#oig-lightbox .controls .name {
+  flex-grow: 1;
+  font-weight: 600;
+  text-align: left;
+  line-height: var(--oig-icon-size);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#oig-lightbox .controls button {
+  background: none;
+  box-shadow: none;
+  box-sizing: content-box;
+  padding: 0;
+  height: var(--oig-icon-size);
+}
+
+#oig-lightbox img {
+  display: block;
+  max-height: calc(100% - (var(--oig-icon-size) + 30px));
+  box-shadow: var(--shadow-l);
+}
+

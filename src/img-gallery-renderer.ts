@@ -1,10 +1,13 @@
-import { App, MarkdownRenderChild, TFolder, TFile, Platform, normalizePath, parseYaml } from 'obsidian'
+import { App, MarkdownRenderChild, TAbstractFile, TFolder, TFile, Platform, normalizePath, parseYaml, setIcon } from 'obsidian'
 import ImgGallery from './main'
 
 export class imgGalleryRenderer extends MarkdownRenderChild {
   private _gallery: HTMLElement = null
   private _settings: {[key: string]: any} = {}
-  private _imagesList: string[] = []
+  private _imagesList: {[key: string]: TAbstractFile} = {};
+  
+  private _lightbox: HTMLElement = null
+  private _currentImage: TAbstractFile = null
 
   constructor(
     public plugin: ImgGallery,
@@ -19,9 +22,8 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
   async onload() {
     this._getSettings()
     this._getImagesList()
-
-    if (this._settings.type === 'horizontal') this._injectHorMasonry()
-    else this._injectVerMasonry()
+    this._injectMasonry()
+    if (this._settings.preview) this._injectLightbox()
   }
 
   async onunload() {
@@ -56,6 +58,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     this._settings.gutter = settingsObj.gutter ?? 8
     this._settings.sortby = settingsObj.sortby ?? 'ctime'
     this._settings.sort = settingsObj.sort ?? 'desc'
+    this._settings.preview = settingsObj.preview ?? false
 
     // settings for vertical mansory only
     this._settings.mobile = settingsObj.mobile ?? 1
@@ -94,70 +97,85 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     // re-sort again by ascending or descending order
     const sortedImages = this._settings.sort === 'asc' ? orderedImages : orderedImages.reverse()
 
-    // return an array of strings only
-    this._imagesList = sortedImages.map(file =>
-      this.app.vault.adapter.getResourcePath(file.path)
-    )
-  }
-
-  private _injectVerMasonry() {
-    // inject the gallery wrapper
-    const gallery = this.container.createEl('div')
-    gallery.addClass('grid-wrapper')
-    gallery.style.lineHeight = '0px'
-    gallery.style.columnCount = `${this._settings.columns}`
-    gallery.style.columnGap = `${this._settings.gutter}px`
-    this._gallery = gallery
-
-    // inject and style images
-    this._imagesList.forEach((uri) => {
-      const img = this._gallery.createEl('img')
-      img.addClass('grid-item')
-      img.style.marginBottom = `${this._settings.gutter}px`
-      img.style.width = '100%'
-      img.style.height = 'auto'
-      img.style.borderRadius = `${this._settings.radius}px`
-      img.src = uri
+    // create an object with the key being the image path
+    sortedImages.forEach(file => {
+      const path = this.app.vault.adapter.getResourcePath(file.path);
+      this._imagesList[path] = file;
     })
   }
 
-  private _injectHorMasonry() {
+  private _injectMasonry() {
     // inject the gallery wrapper
     const gallery = this.container.createEl('div')
+    const galleryType = this._settings.type === 'horizontal' ? 'horizontal' : 'vertical'
     gallery.addClass('grid-wrapper')
-    gallery.style.display = 'flex'
-    gallery.style.flexWrap = 'wrap'
-    gallery.style.marginRight = `-${this._settings.gutter}px`
+    gallery.addClass(galleryType)
+    
+    gallery.setAttribute("style",`\
+      --oig-columns: ${this._settings.columns};\
+      --oig-gutter: ${this._settings.gutter}px;\
+      --oig-radius: ${this._settings.radius}px;\
+      --oig-height: ${this._settings.height}px;\
+    `);
     this._gallery = gallery
 
     // inject and style images
-    this._imagesList.forEach((uri) => {
+    Object.keys(this._imagesList).forEach(uri => {
       const figure = this._gallery.createEl('figure')
       figure.addClass('grid-item')
-      figure.style.margin = `0px ${this._settings.gutter}px ${this._settings.gutter}px 0px`
-      figure.style.height = `${this._settings.height}px`
-      figure.style.borderRadius = `${this._settings.radius}px`
-      figure.style.flex = '1 0 auto'
-      figure.style.overflow = 'hidden'
-
+      if (this._settings.preview) 
+        figure.addEventListener('click', () => this._selectImage(uri))
+      
       const img = figure.createEl('img')
-      img.style.objectFit = 'cover'
-      img.style.width = '100%'
-      img.style.height = '100%'
-      img.style.borderRadius = '0px'
       img.src = uri
     })
   }
+  
+  private _injectLightbox() {
+    console.log(this.container.parentElement)
+    this._lightbox = this.container.createDiv()
+    this._lightbox.id = 'oig-lightbox'
+    this._lightbox.hidden = true
+    this._lightbox.addEventListener('click', e => {
+      if(e.target === wrapper || e.target === this._lightbox) this._lightbox.hidden = true
+    });
+    
+    const wrapper = this._lightbox.createDiv({cls: 'wrapper'})
+    const controls = wrapper.createDiv({cls: 'controls'})
+    const name = controls.createEl('div', {cls: 'name'})
+    name.createEl('span')
+    
+    const goto = controls.createEl('button')
+    setIcon(goto, 'external-link')
+    goto.addEventListener('click', () =>
+      this.app.workspace.openLinkText(this._currentImage.path, '', true, {active: true})  
+    );
+    
+    const search = controls.createEl('button')
+    setIcon(search, 'search')
+    search.addEventListener('click', () => {
+      const search = (this.app as any).internalPlugins.getPluginById('global-search')?.instance
+      search.openGlobalSearch(this._currentImage.name); 
+    });
+    
+    const close = controls.createEl('button')
+    setIcon(close, 'x')
+    close.addEventListener('click', () => this._lightbox.hidden = true);
+
+    wrapper.createEl('img')
+  }
+  
+  private _selectImage = (uri: string) => {
+    this._currentImage = this._imagesList[uri];
+
+    this._lightbox.hidden = false
+    this._lightbox.getElementsByTagName("img")[0].src = uri
+    this._lightbox.getElementsByTagName("span")[0].innerHTML = this._currentImage.name
+  }  
 
   private _renderError(error: string) {
-    // render a custom error and style it
-    const wrapper = this.container.createEl('div')
-    const content = wrapper.createEl('p', {text: `(Error) Image Gallery: ${error}`});
-
-    wrapper.style.borderRadius = '4px'
-    wrapper.style.padding = '2px 16px'
-    wrapper.style.backgroundColor = '#e50914'
-    wrapper.style.color = '#fff'
-    wrapper.style.fontWeight = 'bolder'
+    // render a custom error
+    const wrapper = this.container.createEl('div', { cls: 'error'})
+    wrapper.createEl('p', {text: `(Error) Image Gallery: ${error}`});
   }
 }
