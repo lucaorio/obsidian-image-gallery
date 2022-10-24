@@ -58,7 +58,10 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
     this._settings.gutter = settingsObj.gutter ?? 8
     this._settings.sortby = settingsObj.sortby ?? 'ctime'
     this._settings.sort = settingsObj.sort ?? 'desc'
-    this._settings.preview = settingsObj.preview ?? false
+
+    //always disable previews on mobile
+    if (Platform.isMobile) this._settings.preview = false
+    else this._settings.preview = settingsObj.preview ?? false
 
     // settings for vertical mansory only
     this._settings.mobile = settingsObj.mobile ?? 1
