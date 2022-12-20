@@ -1,12 +1,3 @@
-Obsidian Image Gallery is currently [pending review](https://github.com/obsidianmd/obsidian-releases/pull/961).
-Until then, feel free to install it manually by cloning/downloading this repository, moving its folder into your `MyVault/.obsidian/plugins` folder, and building it with `npm`.
-
-If you're unsure how to build it, you can grab the `main.js` file [from here](https://github.com/lucaorio/obsidian-image-gallery/releases/tag/1.0.0) and copy/paste it inside the folder you previously moved into your plugin folder.
-
-**Please, keep in mind that proceeding this way is not best practice, and I'm not sure the plugin will receive updates later on!**
-
----
-
 ![Obsidian Image Gallery](assets/obsidian-image-gallery-header.jpg)
 
 # Obsidian Image Gallery
@@ -59,23 +50,30 @@ In *[Live Preview](https://help.obsidian.md/Live+preview+update)* mode, the gall
 
 ## Settings
 
-Settings can be customized in any order, in `yaml` syntax. Optional properties default to the values outlined in the list of bullet points below:
+Settings can be customized in any order, in `yaml` syntax. Optional properties default to the values outlined in the tables below:
 
-- `path: Attachments/Folder` (**required**, path relative to the root of your vault)
-- `type: horizontal` (**optional**, type of masonry `horizontal` or `vertical`)
-- `gutter: 8` (**optional**, spacing between the images)
-- `radius: 0` (**optional**, border radius of the images)
-- `sortby: ctime` (**optional**, sort by `ctime`, `mtime`, or `name`)
-- `sort: desc` (**optional**, order of sorting: `desc` or `asc`)
+| Option   | Default      | Alternatives    | Required | Description                            |
+| -------- | ------------ | --------------- | -------- | -------------------------------------- |
+| `path`   | -            | -               | Yes      | Path relative to the root of the vault |
+| `type`   | `horizontal` | `vertical`      | No       | Type of masonry                        |
+| `gutter` | `8`          | (any number)    | No       | Spacing in px between the images       |
+| `radius` | `0`          | (any number)    | No       | Border radius in px of the images      |
+| `sortby` | `ctime`      | `mtime`, `name` | No       | Sort images by                         |
+| `sort`   | `desc`       | `asc`           | No       | Order of sorting                       |
 
-Applicable to `type: horizontal` only:
+Options applicable only for `type=horizontal`:
 
-- `height: 260` (**optional**, height in px of all rows)
+| Option   | Default | Alternatives | Required | Description              |
+| -------- | ------- | ------------ | -------- | ------------------------ |
+| `height` | `260`   | (any number) | No       | Height in px of all rows |
 
-Applicable to `type=vertical` only:
+Options applicable only for `type=vertical`:
 
-- `columns: 3` (**optional**, number of columns for desktop)
-- `mobile: 1` (**optional**, number of columns for mobile)
+| Option    | Default | Alternatives | Required | Description                   |
+| --------- | ------- | ------------ | -------- | ----------------------------- |
+| `columns` | `3`     | (any number) | No       | Number of columns for desktop |
+| `mobile`  | `1`     | (any number) | No       | Number of columns for mobile  |
+
 
 ## Notes:
 - For `path` there is no need to specify the name of the vault
