@@ -9,8 +9,7 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
   constructor(
     public plugin: ImgGallery,
     public src: string,
-    public container:
-    HTMLElement,
+    public container: HTMLElement,
     public app: App
   ) {
     super(container)
