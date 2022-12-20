@@ -85,8 +85,8 @@ export class imgGalleryRenderer extends MarkdownRenderChild {
 
     // sort the list by name, mtime, or ctime
     const orderedImages = images.sort((a: any, b: any) => {
-      const refA = this._settings.sortby ? a.stat[this._settings.sortby] : a['name'].toUpperCase()
-      const refB = this._settings.sortby ? b.stat[this._settings.sortby] : b['name'].toUpperCase()
+      const refA = this._settings.sortby === 'name' ? a['name'].toUpperCase() : a.stat[this._settings.sortby]
+      const refB = this._settings.sortby === 'name' ? b['name'].toUpperCase() : b.stat[this._settings.sortby]
       return (refA < refB) ? -1 : (refA > refB) ? 1 : 0
     })
 
