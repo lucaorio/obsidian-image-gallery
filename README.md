@@ -85,6 +85,13 @@ An additional note about the orientation of the masonry vs. the distribution of 
 ## Examples:
 ![Obsidian Image Gallery - Examples](assets/obsidian-image-gallery-examples.jpg)
 
+## Changelog
+`1.1.0`
+  - fixed alphabetical sorting
+  - introduced lightbox for both desktop and mobile
+  - added a "open image in new tab" button available in the lightbox
+  - fixed the casing of README.md to let Obsidian retrieve the correct file
+
 ## Acknowledgments
 All photos in the header are by various photographers and available on [Unsplash](https://unsplash.com/s/photos/architecture).
 
