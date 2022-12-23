@@ -86,6 +86,10 @@ An additional note about the orientation of the masonry vs. the distribution of 
 ![Obsidian Image Gallery - Examples](assets/obsidian-image-gallery-examples.jpg)
 
 ## Changelog
+
+`1.1.1`
+  - Fix bug for the "open image in new tab" feature
+
 `1.1.0`
   - fixed alphabetical sorting
   - introduced lightbox for both desktop and mobile
