@@ -38,7 +38,7 @@ const globalSearchBtn = (gallery: HTMLElement, imagesList: {[key: string]: any})
     galleryInstance.outer.find('#btn-glob-search').on('click', () => {
       const index = galleryInstance.index
       const selected = imagesList[index]
-      app.workspace.openLinkText(selected.name, selected.folder, true, {active: true})
+      app.workspace.openLinkText('', `${selected.folder}/${selected.name}`, true, {active: true})
       galleryInstance.closeGallery()
     });
   })
