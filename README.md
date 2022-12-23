@@ -15,7 +15,7 @@ Obsidian Image Gallery is a zero setup masonry image gallery for [Obsidian](http
 
 ## Requirements
 
-- [Obsidian](https://obsidian.md/) `(ver >= 0.14.6)`
+- [Obsidian](https://obsidian.md/) `(ver >= 1.1.8)`
 - A folder(s) of local images located somewhere in your vault
 
 ## Installation
@@ -47,6 +47,10 @@ Take a look at [settings](#settings) to see how to tweak some properties of the 
 In *[Live Preview](https://help.obsidian.md/Live+preview+update)* mode, the gallery will be generated after moving the cursor outside the code block. Using the regular *Source Mode*, press `cmd+e` (or `ctrl+e`) to trigger Obsidian's Note Preview.
 
 ![Obsidian Image Gallery - Animation](assets/obsidian-image-gallery.gif)
+
+`1.1.1` introduces a lightbox view accessible by clicking on any image part of the gallery. Then, if you need to, click the button on the top right to open the original image in a new tab.
+
+![Obsidian Image Gallery - Animation](assets/obsidian-image-gallery-lightbox.jpg)
 
 ## Settings
 
@@ -88,7 +92,7 @@ An additional note about the orientation of the masonry vs. the distribution of 
 ## Changelog
 
 `1.1.1`
-  - Fix bug for the "open image in new tab" feature
+  - fixed bug for the "open image in new tab" feature
 
 `1.1.0`
   - fixed alphabetical sorting
