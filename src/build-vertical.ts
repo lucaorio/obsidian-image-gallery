@@ -17,6 +17,7 @@ const buildVertical = (
       figure.style.marginBottom = `${settings.gutter}px`
       figure.style.width = '100%'
       figure.style.height = 'auto'
+      figure.style.cursor = 'pointer'
       figure.setAttribute('data-name', file.name)
       figure.setAttribute('data-folder', file.name)
       figure.setAttribute('data-src', file.uri)

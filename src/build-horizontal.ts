@@ -20,6 +20,7 @@ const buildHorizontal = (
     figure.style.borderRadius = `${settings.radius}px`
     figure.style.flex = '1 0 auto'
     figure.style.overflow = 'hidden'
+    figure.style.cursor = 'pointer'
     figure.setAttribute('data-name', file.name)
     figure.setAttribute('data-folder', file.name)
     figure.setAttribute('data-src', file.uri)
