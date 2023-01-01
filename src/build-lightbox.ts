@@ -14,8 +14,7 @@ const lightbox = (gallery: HTMLElement, imagesList: {[key: string]: any}, app: A
     thumbnail: true,
     loop: false,
     mode: 'lg-fade',
-    // todo: replace with GPLv3 compatible license whenever available
-    licenseKey: '1234-1234-123-1234',
+    licenseKey: '622E672F-760D49DC-980EF90F-B7A9DCB0',
   })
 
   // if we are on mobile, make sure to remove unnecessary controls
