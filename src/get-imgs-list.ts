@@ -19,8 +19,11 @@ const getImagesList = (
 
   // filter the list of files to make sure we're dealing with images only
   const validExtensions = ["jpeg", "jpg", "gif", "png", "webp", "tiff", "tif"]
+  const regex = new RegExp(settings.filter)
   const images = files.filter(file => {
-    if (file instanceof TFile && validExtensions.includes(file.extension)) return file
+    if (file instanceof TFile) {
+      if (validExtensions.includes(file.extension) && regex.test(file.basename)) return file
+    }
   })
 
   // sort the list by name, mtime, or ctime

@@ -18,10 +18,21 @@ const getSettings = (src: string, container: HTMLElement) => {
     throw new Error(error)
   }
 
+  if (settingsSrc.filter) {
+    try {
+      new RegExp(settingsSrc.filter)
+    } catch {
+      const error = 'Please check filter regular expression'
+      renderError(container, error)
+      throw new Error(error)
+    }
+  }
+
   // store settings, normalize and set sensible defaults
   const settings = {
     path: undefined as string,
     type: undefined as string,
+    filter: undefined as string,
     radius: undefined as number,
     gutter: undefined as string,
     sortby: undefined as string,
@@ -33,6 +44,7 @@ const getSettings = (src: string, container: HTMLElement) => {
 
   settings.path = normalizePath(settingsSrc.path)
   settings.type = settingsSrc.type ?? 'horizontal'
+  settings.filter = settingsSrc.filter ?? '.*'
   settings.radius = settingsSrc.radius ?? 0
   settings.gutter = settingsSrc.gutter ?? 8
   settings.sortby = settingsSrc.sortby ?? 'ctime'
