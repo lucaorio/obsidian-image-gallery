@@ -7,7 +7,11 @@ const getImagesList = (
     settings: {[key: string]: any}
   ) => {
   // retrieve a list of the files
-  const folder = app.vault.getAbstractFileByPath(settings.path)
+  const parentFolderPath = app.workspace.getActiveFile().parent.path
+  const folderPath = settings.path === '.' 
+    ? parentFolderPath 
+    : settings.path.replace('./', `${parentFolderPath}/`)
+  const folder = app.vault.getAbstractFileByPath(folderPath)
 
   let files
   if (folder instanceof TFolder) { files = folder.children }
