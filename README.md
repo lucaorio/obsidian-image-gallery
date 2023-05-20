@@ -4,14 +4,17 @@
 Obsidian Image Gallery is a zero setup masonry image gallery for [Obsidian](https://obsidian.md/).
 
 **Table of Contents**
-- [Requirements](#requirements)
-- [Usage](#usage)
-- [Settings](#settings)
-- [Notes](#notes)
-- [Examples](#examples)
-- [Acknowledgments](#acknowledgments)
-- [License](#license)
-- [Contacts](#contacts)
+- [Obsidian Image Gallery](#obsidian-image-gallery)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Settings](#settings)
+  - [Notes:](#notes)
+  - [Examples:](#examples)
+  - [Changelog](#changelog)
+  - [Acknowledgments](#acknowledgments)
+  - [License](#license)
+  - [Contacts](#contacts)
 
 ## Requirements
 
@@ -56,14 +59,15 @@ In *[Live Preview](https://help.obsidian.md/Live+preview+update)* mode, the gall
 
 Settings can be customized in any order, in `yaml` syntax. Optional properties default to the values outlined in the tables below:
 
-| Option   | Default      | Alternatives    | Required | Description                            |
-| -------- | ------------ | --------------- | -------- | -------------------------------------- |
-| `path`   | -            | -               | Yes      | Path relative to the root of the vault |
-| `type`   | `horizontal` | `vertical`      | No       | Type of masonry                        |
-| `gutter` | `8`          | (any number)    | No       | Spacing in px between the images       |
-| `radius` | `0`          | (any number)    | No       | Border radius in px of the images      |
-| `sortby` | `ctime`      | `mtime`, `name` | No       | Sort images by                         |
-| `sort`   | `desc`       | `asc`           | No       | Order of sorting                       |
+| Option      | Default      | Alternatives    | Required | Description                            |
+| ----------- | ------------ | --------------- | -------- | -------------------------------------- |
+| `path`      | -            | -               | Yes      | Path relative to the root of the vault |
+| `type`      | `horizontal` | `vertical`      | No       | Type of masonry                        |
+| `gutter`    | `8`          | (any number)    | No       | Spacing in px between the images       |
+| `radius`    | `0`          | (any number)    | No       | Border radius in px of the images      |
+| `sortby`    | `ctime`      | `mtime`, `name` | No       | Sort images by                         |
+| `sort`      | `desc`       | `asc`           | No       | Order of sorting                       |
+| `recursive` | `false`      | `true`          | No       | Adds images within subfolder of path   |
 
 Options applicable only for `type=horizontal`:
 

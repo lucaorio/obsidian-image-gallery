@@ -29,6 +29,7 @@ const getSettings = (src: string, container: HTMLElement) => {
     mobile: undefined as number,
     columns: undefined as number,
     height: undefined as number,
+    recursive: undefined as boolean,
   }
 
   settings.path = normalizePath(settingsSrc.path)
@@ -37,6 +38,7 @@ const getSettings = (src: string, container: HTMLElement) => {
   settings.gutter = settingsSrc.gutter ?? 8
   settings.sortby = settingsSrc.sortby ?? 'ctime'
   settings.sort = settingsSrc.sort ?? 'desc'
+  settings.recursive = settingsSrc.recursive ?? false
 
   // settings for vertical mansory only
   settings.mobile = settingsSrc.mobile ?? 1
