@@ -1,7 +1,7 @@
 {
   "id": "obsidian-image-gallery",
   "name": "Image Gallery",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "minAppVersion": "1.1.8",
   "description": "A zero setup masonry image gallery for Obsidian",
   "author": "Luca Orio",

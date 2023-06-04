@@ -12,8 +12,8 @@ const getSettings = (src: string, container: HTMLElement) => {
     throw new Error(error)
   }
 
-  if (!settingsSrc.path) {
-    const error = 'Please specify a path!'
+  if (!settingsSrc.path && (!settingsSrc.targets || settingsSrc.targets.empty)) {
+    const error = 'Please specify a path or targets!'
     renderError(container, error)
     throw new Error(error)
   }
@@ -21,6 +21,7 @@ const getSettings = (src: string, container: HTMLElement) => {
   // store settings, normalize and set sensible defaults
   const settings = {
     path: undefined as string,
+    targets: [] as string[],
     type: undefined as string,
     radius: undefined as number,
     gutter: undefined as string,
@@ -31,7 +32,22 @@ const getSettings = (src: string, container: HTMLElement) => {
     height: undefined as number,
   }
 
-  settings.path = normalizePath(settingsSrc.path)
+  try {
+    settings.path = settings.path ? normalizePath(settingsSrc.path) : undefined
+
+    if (!settingsSrc.targets || settingsSrc.targets.length === 0) settings.targets = []
+    else settings.targets = settingsSrc.targets.map((target: string) => {
+      if (target)
+        return normalizePath(target)
+      else
+        console.warn('Target is empty!')
+    });
+  }
+  catch (error) {
+    renderError(container, error)
+    throw new Error(error)
+  }
+
   settings.type = settingsSrc.type ?? 'horizontal'
   settings.radius = settingsSrc.radius ?? 0
   settings.gutter = settingsSrc.gutter ?? 8
