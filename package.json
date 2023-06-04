@@ -1,6 +1,6 @@
 {
   "name": "obsidian-image-gallery",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A zero setup masonry image gallery for Obsidian",
   "main": "main.js",
   "scripts": {
