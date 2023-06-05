@@ -1,4 +1,4 @@
-import { App, TFolder, TFile } from 'obsidian'
+import { App, TFolder, TFile, TAbstractFile } from 'obsidian'
 import renderError from './render-error'
 
 const getImagesList = (
@@ -7,12 +7,36 @@ const getImagesList = (
     settings: {[key: string]: any}
   ) => {
   // retrieve a list of the files
-  const folder = app.vault.getAbstractFileByPath(settings.path)
 
-  let files
-  if (folder instanceof TFolder) { files = folder.children }
-  else {
-    const error = 'The folder doesn\'t exist, or it\'s empty!'
+  let files: TAbstractFile[] = []
+
+  settings.targets.forEach((target: string) => {
+    const file = app.vault.getAbstractFileByPath(target)
+    if (file instanceof TFolder) {
+      files.push(...file.children)
+    }
+    else if (file instanceof TFile) {
+      files.push(file)
+    }
+    else {
+      console.warn('The target ' + target + ' doesn\'t exist!')
+    }
+  });
+
+  // depricated field
+  if (settings.path !== undefined) {
+    const folder = app.vault.getAbstractFileByPath(settings.path)
+    if (folder instanceof TFolder) {
+      files.push(...folder.children)
+    }
+    else {
+      console.warn('The folder doesn\'t exist, or it\'s empty!')
+    }
+  }
+
+
+  if (files.length === 0) {
+    const error = 'The file list is empty!'
     renderError(container, error)
     throw new Error(error)
   }
