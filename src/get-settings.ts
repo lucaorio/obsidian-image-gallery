@@ -33,7 +33,7 @@ const getSettings = (src: string, container: HTMLElement) => {
   }
 
   try {
-    settings.path = settings.path ? normalizePath(settingsSrc.path) : undefined
+    settings.path = settingsSrc.path ? normalizePath(settingsSrc.path) : undefined
 
     if (!settingsSrc.targets || settingsSrc.targets.length === 0) settings.targets = []
     else settings.targets = settingsSrc.targets.map((target: string) => {
